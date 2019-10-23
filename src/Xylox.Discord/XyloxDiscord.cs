@@ -1,38 +1,26 @@
 ﻿using Discord;
-using Discord.Commands;
 using Discord.WebSocket;
 using System.Threading.Tasks;
+using Xylox.Discord.Commands;
 using Xylox.Discord.Config;
 
 namespace Xylox.Discord
 {
     public class XyloxDiscord
     {
-        public readonly DiscordSocketClient DiscordClient;
-        public readonly CommandService CommandService;
+        private readonly DiscordSocketClient _discordClient;
+        private readonly CommandHandler _commandHandler;
+        private readonly Logger _logger;
         private readonly IXyloxConfig _xyloxConfig;
         private readonly XyConf _xyConf;
 
-        public XyloxDiscord(IXyloxConfig xyloxConfig)
+        public XyloxDiscord(DiscordSocketClient discordClient, CommandHandler commandHandler, Logger logger, IXyloxConfig xyloxConfig)
         {
+            _discordClient = discordClient;
+            _commandHandler = commandHandler;
+            _logger = logger;
             _xyloxConfig = xyloxConfig;
             _xyConf = _xyloxConfig.GetConfig();
-
-            var clientConfig = new DiscordSocketConfig
-            {
-                AlwaysDownloadUsers = true,
-                LogLevel = LogSeverity.Verbose,
-                ExclusiveBulkDelete = true,
-                MessageCacheSize = 50
-            };
-
-            var commandConfig = new CommandServiceConfig 
-            {
-                CaseSensitiveCommands = false
-            };
-            
-            DiscordClient = new DiscordSocketClient(clientConfig);
-            CommandService = new CommandService(commandConfig);
         }
 
 
@@ -40,21 +28,16 @@ namespace Xylox.Discord
         {
             HookEvents();
 
-            await DiscordClient.LoginAsync(TokenType.Bot, _xyConf.Token);
-            await DiscordClient.StartAsync();
+            await _discordClient.LoginAsync(TokenType.Bot, _xyConf.Token);
+            await _discordClient.StartAsync();
+            await _commandHandler.InitializeAsync();
 
             await Task.Delay(-1);
         }
 
         private void HookEvents()
         {
-            DiscordClient.Log += LogAsync;
-        }
-
-        private Task LogAsync(LogMessage log)
-        {
-            System.Console.WriteLine(log.Message);
-            return Task.CompletedTask;
+            _discordClient.Log += _logger.LogAsync;
         }
     }
 }
