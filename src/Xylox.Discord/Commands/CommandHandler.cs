@@ -43,12 +43,15 @@ namespace Xylox.Discord.Commands
             if (!command.IsSpecified)
                 return;
 
-            var embed = new EmbedBuilder()
-                .WithTitle("ERROR")
-                .WithDescription(result.ErrorReason)
-                .WithColor(Color.DarkRed);
+            if (!result.IsSuccess)
+            {
+                var embed = new EmbedBuilder()
+                    .WithTitle("ERROR")
+                    .WithDescription(result.ErrorReason)
+                     .WithColor(Color.DarkRed);
 
-            await context.Channel.SendMessageAsync(embed: embed.Build());
+                await context.Channel.SendMessageAsync(embed: embed.Build());
+            }
         }
 
         private async Task HandlerMessageAsync(SocketMessage socketMessage)
