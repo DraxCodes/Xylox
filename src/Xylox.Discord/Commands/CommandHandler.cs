@@ -63,7 +63,7 @@ namespace Xylox.Discord.Commands
                 message.Author.IsBot)
                 return;
 
-            var context = new SocketCommandContext(_discordClient, message);
+            var context = new XyloxCommandContext(_discordClient, message);
 
             await _commandService.ExecuteAsync(
                     context: context,
