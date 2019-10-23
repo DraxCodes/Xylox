@@ -18,6 +18,7 @@ namespace Xylox.UI
     {
         public override void Load()
         {
+            Bind<XyloxDiscord>().ToSelf().InSingletonScope();
             Bind<IXyloxConfig>().To<XyloxConfig>().InSingletonScope();
         }
     }

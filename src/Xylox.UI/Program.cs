@@ -1,12 +1,16 @@
-﻿using System;
+﻿using Ninject;
+using System;
+using System.Threading.Tasks;
+using Xylox.Discord;
 
 namespace Xylox.UI
 {
-    class Program
+    internal sealed class Program
     {
-        static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var setup = Activator.CreateInstance<Setup>();
+            await setup.Kernal.Get<XyloxDiscord>().Run();
         }
     }
 }
