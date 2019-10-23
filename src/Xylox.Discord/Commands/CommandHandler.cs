@@ -26,9 +26,46 @@ namespace Xylox.Discord.Commands
             _xyConf = _xyloxConfig.GetConfig();
         }
 
+        public async Task InitializeAsync()
         {
-            _bot = bot;
-            _commandService = _bot.CommandService;
+            await _commandService.AddModulesAsync(Assembly.GetExecutingAssembly(), _kernel);
+            HookEvents();
+        }
+
+        private void HookEvents()
+        {
+            _discordClient.MessageReceived += HandlerMessageAsync;
+            _commandService.CommandExecuted += CommandExecutedAsync;
+        }
+
+        private async Task CommandExecutedAsync(Optional<CommandInfo> command, ICommandContext context, IResult result)
+        {
+            if (!command.IsSpecified)
+                return;
+
+            var embed = new EmbedBuilder()
+                .WithTitle("ERROR")
+                .WithDescription(result.ErrorReason)
+                .WithColor(Color.DarkRed);
+
+            await context.Channel.SendMessageAsync(embed: embed.Build());
+        }
+
+        private async Task HandlerMessageAsync(SocketMessage socketMessage)
+        {
+            if (!(socketMessage is SocketUserMessage message)) return;
+            var argPos = 0;
+
+            if (!(message.HasStringPrefix(_xyConf.Prefix, ref argPos)) ||
+                message.Author.IsBot)
+                return;
+
+            var context = new SocketCommandContext(_discordClient, message);
+
+            await _commandService.ExecuteAsync(
+                    context: context,
+                    argPos: argPos,
+                    services: _kernel);
         }
     }
 }
