@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29319.158
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xylox.UI", "Xylox.UI\Xylox.UI.csproj", "{32424444-DA02-420B-ABF6-2CC2BFCF6EF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xylox.Discord", "Xylox.Discord\Xylox.Discord.csproj", "{09E35275-5EFF-4114-86C3-52880026E886}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xylox.Discord", "Xylox.Discord\Xylox.Discord.csproj", "{09E35275-5EFF-4114-86C3-52880026E886}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xylox.Services", "Xylox.Services\Xylox.Services.csproj", "{D1A75850-A529-47FF-96A4-8D55E9DC0CFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{09E35275-5EFF-4114-86C3-52880026E886}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09E35275-5EFF-4114-86C3-52880026E886}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09E35275-5EFF-4114-86C3-52880026E886}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1A75850-A529-47FF-96A4-8D55E9DC0CFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1A75850-A529-47FF-96A4-8D55E9DC0CFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1A75850-A529-47FF-96A4-8D55E9DC0CFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1A75850-A529-47FF-96A4-8D55E9DC0CFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

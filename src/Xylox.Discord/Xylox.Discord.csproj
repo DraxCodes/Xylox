@@ -9,4 +9,8 @@
     <PackageReference Include="Ninject" Version="3.3.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Xylox.Services\Xylox.Services.csproj" />
+  </ItemGroup>
+
 </Project>
