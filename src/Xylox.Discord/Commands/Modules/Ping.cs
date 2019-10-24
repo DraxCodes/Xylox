@@ -10,7 +10,7 @@ namespace Xylox.Discord.Commands.Modules
         public async Task PingCommand()
         {
             var embed = new EmbedBuilder()
-                .WithAuthor($"Ohia {Context.User.Username}#{Context.User.Discriminator}")
+                .WithAuthor($"Ohia {Context.User.ToString()}")
                 .WithDescription("Pong!")
                 .WithColor(Color.DarkMagenta);
 
