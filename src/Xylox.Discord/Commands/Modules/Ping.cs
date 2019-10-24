@@ -9,12 +9,12 @@ namespace Xylox.Discord.Commands.Modules
         [Command("Ping")]
         public async Task PingCommand()
         {
-            var embed = new EmbedBuilder()
+            Context.Embed
                 .WithAuthor($"Ohia {Context.User.ToString()}")
                 .WithDescription("Pong!")
                 .WithColor(Color.DarkMagenta);
 
-            await ReplyEmbedAsync(embed);
+            await ReplyEmbedAsync(Context.Embed);
         }
     }
 }
