@@ -6,6 +6,7 @@ using Ninject.Modules;
 using Xylox.Discord;
 using Xylox.Discord.Commands;
 using Xylox.Discord.Config;
+using Xylox.Discord.Helpers.Embeds;
 
 namespace Xylox.UI
 {
@@ -38,6 +39,7 @@ namespace Xylox.UI
             };
 
             Bind<XyloxDiscord>().ToSelf().InSingletonScope();
+            Bind<EmbedFactory>().ToSelf().InTransientScope();
             Bind<Logger>().ToSelf().InSingletonScope();
             Bind<CommandHandler>().ToSelf().InSingletonScope();
             Bind<IXyloxConfig>().To<XyloxConfig>().InSingletonScope();

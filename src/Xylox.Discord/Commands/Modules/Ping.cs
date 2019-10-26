@@ -1,18 +1,24 @@
 ﻿using Discord;
 using Discord.Commands;
 using System.Threading.Tasks;
+using Xylox.Discord.Helpers.Embeds;
+using EmbedType = Xylox.Discord.Helpers.Embeds.EmbedType;
 
 namespace Xylox.Discord.Commands.Modules
 {
     public class Ping : XyloxModuleBase
     {
-        [Command("Ping")]
-        public async Task PingCommand()
+        private readonly EmbedFactory _embedFactory;
+
+        public Ping(EmbedFactory embedFactory)
         {
-            var embed = new EmbedBuilder()
-                .WithAuthor($"Ohia {Context.User.Username}#{Context.User.Discriminator}")
-                .WithDescription("Pong!")
-                .WithColor(Color.DarkMagenta);
+            _embedFactory = embedFactory;
+        }
+
+        [Command("Ping")]
+        public async Task PingCommand(string message)
+        {
+            var embed = _embedFactory.Generate(EmbedType.Success, $"Ohia {Context.User.Username}#{Context.User.Discriminator}", $"Pong! {message}");
 
             await ReplyEmbedAsync(embed);
         }
