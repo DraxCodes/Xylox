@@ -40,6 +40,7 @@ namespace Xylox.UI
 
             Bind<XyloxDiscord>().ToSelf().InSingletonScope();
             Bind<EmbedFactory>().ToSelf().InTransientScope();
+            Bind<CommandErrorHandler>().ToSelf().InTransientScope();
             Bind<Logger>().ToSelf().InSingletonScope();
             Bind<CommandHandler>().ToSelf().InSingletonScope();
             Bind<IXyloxConfig>().To<XyloxConfig>().InSingletonScope();

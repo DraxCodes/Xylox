@@ -16,11 +16,15 @@ namespace Xylox.Discord.Commands.Modules
         }
 
         [Command("Ping")]
-        public async Task PingCommand(string message)
+        public async Task PingCommand(
+            [Name("Message")] [Summary("The message to echo back.")] string message)
         {
-            var embed = _embedFactory.Generate(EmbedType.Success, $"Ohia {Context.User.ToString()}", $"Pong! {message}");
+            var embed = _embedFactory.Generate(
+                requestedType: EmbedType.Success, 
+                title: $"Ohia {Context.User.ToString()}", 
+                description: $"Pong! {message}");
 
-            await ReplyEmbedAsync(Context.Embed);
+            await ReplyEmbedAsync(embed);
         }
     }
 }
