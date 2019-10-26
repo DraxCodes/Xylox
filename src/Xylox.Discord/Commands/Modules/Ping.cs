@@ -18,9 +18,9 @@ namespace Xylox.Discord.Commands.Modules
         [Command("Ping")]
         public async Task PingCommand(string message)
         {
-            var embed = _embedFactory.Generate(EmbedType.Success, $"Ohia {Context.User.Username}#{Context.User.Discriminator}", $"Pong! {message}");
+            var embed = _embedFactory.Generate(EmbedType.Success, $"Ohia {Context.User.ToString()}", $"Pong! {message}");
 
-            await ReplyEmbedAsync(embed);
+            await ReplyEmbedAsync(Context.Embed);
         }
     }
 }
