@@ -37,7 +37,14 @@ namespace Xylox.Discord
 
         private void HookEvents()
         {
+            _discordClient.Ready += OnReadyAsync;
             _discordClient.Log += _logger.LogAsync;
+        }
+
+        private async Task OnReadyAsync()
+        {
+            await _discordClient.SetStatusAsync(UserStatus.Idle);
+            await _discordClient.SetGameAsync(name: _xyConf.Status, type: ActivityType.Listening);
         }
     }
 }

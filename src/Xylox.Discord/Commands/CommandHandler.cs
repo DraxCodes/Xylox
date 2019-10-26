@@ -25,8 +25,8 @@ namespace Xylox.Discord.Commands
             _discordClient = discordClient;
             _kernel = kernel;
             _xyloxConfig = xyloxConfig;
-            _xyConf = _xyloxConfig.GetConfig();
             _commandErrorHandler = commandErrorHandler;
+            _xyConf = _xyloxConfig.GetConfig();
         }
 
         public async Task InitializeAsync()
