@@ -247,6 +247,7 @@ namespace Xylox.Audio
         private XyloxTrack ConvertTrackToXyloxTrack(LavaTrack track, bool isQueued)
             => new XyloxTrack
             {
+                Id = track.Id,
                 Title = track.Title,
                 Author = track.Author,
                 Duration = track.Duration,
