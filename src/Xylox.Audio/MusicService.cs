@@ -220,9 +220,7 @@ namespace Xylox.Audio
 
         private IGuild GetGuild(ulong id)
         {
-            var guild = _discordClient.GetGuild(id) as IGuild;
-
-            if (guild is null)
+            if (!(_discordClient.GetGuild(id) is IGuild guild))
                 throw new InvalidCastException("Music Service: Unable to cast guild to IGuild");
 
             return guild;
