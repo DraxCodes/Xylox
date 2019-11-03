@@ -8,7 +8,7 @@ namespace Xylox.Discord
 {
     public class XyloxDiscord
     {
-        private readonly DiscordSocketClient _discordClient;
+        public readonly DiscordSocketClient _discordClient;
         private readonly CommandHandler _commandHandler;
         private readonly Logger _logger;
         private readonly IXyloxConfig _xyloxConfig;

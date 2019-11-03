@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Xylox.Audio\Xylox.Audio.csproj" />
     <ProjectReference Include="..\Xylox.Discord\Xylox.Discord.csproj" />
   </ItemGroup>
 
