@@ -6,7 +6,7 @@ namespace Xylox.Discord.Helpers.Embeds
 {
     public class EmbedFactory
     {
-        private List<EmbedInfo> embedInformation = new List<EmbedInfo>
+        private readonly List<EmbedInfo> embedInformation = new List<EmbedInfo>
         {
             new EmbedInfo(EmbedType.Error, Color.Red),
             new EmbedInfo(EmbedType.Info, Color.Blue),
