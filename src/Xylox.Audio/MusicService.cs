@@ -206,10 +206,20 @@ namespace Xylox.Audio
                 return;
 
             if (!trackEndArgs.Player.Queue.TryDequeue(out var track))
-                await trackEndArgs.Player.TextChannel.SendMessageAsync("No more tracks to play.");
+                await trackEndArgs.Player.TextChannel.SendMessageAsync("Playback Finised");
+
+            var embed = new EmbedBuilder()
+                .WithColor(Color.Green)
+                .WithTitle("Music Service")
+                .WithDescription(
+                    $"Title: {track.Title}\n" +
+                    $"Author: {track.Author}\n" +
+                    $"Duration: {track.Duration.ToString("h'h 'm'm 's's'")}\n\n" +
+                    $"Url: [Youtube]({track.Url})")
+                .WithThumbnailUrl($"https://img.youtube.com/vi/{track.Id}/maxresdefault.jpg");
 
             await trackEndArgs.Player.PlayAsync(track);
-            await trackEndArgs.Player.TextChannel.SendMessageAsync($"Now playing: {track.Title}");
+            await trackEndArgs.Player.TextChannel.SendMessageAsync(embed: embed.Build());
         }
 
         private async Task LogAsync(LogMessage arg)
