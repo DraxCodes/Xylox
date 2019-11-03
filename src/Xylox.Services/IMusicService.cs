@@ -7,15 +7,15 @@ namespace Xylox.Services
     public interface IMusicService
     {
         Task InitializeWhenReadyAsync();
-        Task<IEnumerable<IXyloxTrack>> GetPlaylistAsync(ulong id);
-        Task<IXyloxTrack> PlayTrackAsync(string query, ulong id);
-        Task<IXyloxTrack> SkipTrackAsync(int trackId, ulong id);
-        Task<IXyloxTrack> SkipTrackAsync(ulong id);
+        Task<IEnumerable<IXyloxTrack>> GetPlaylistAsync(ulong guildId);
+        Task<IXyloxTrack> PlayTrackAsync(string query, ulong guildId);
+        Task<IXyloxTrack> SkipTrackAsync(int trackId, ulong guildId);
+        Task<IXyloxTrack> SkipTrackAsync(ulong guildId);
         Task<string> JoinAsync(ulong voiceId, ulong textId);
         Task<string> LeaveAsync(ulong voiceId);
-        Task<string> PauseAsync(ulong id);
-        Task<string> ResumeAsync(ulong id);
-        Task<string> StopAsync(ulong id);
-        Task<string> SetVolumeAsync(int level, ulong id);
+        Task<string> PauseAsync(ulong guildId);
+        Task<string> ResumeAsync(ulong guildId);
+        Task<string> StopAsync(ulong guildId);
+        Task<string> SetVolumeAsync(int level, ulong guildId);
     }
 }
