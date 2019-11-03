@@ -3,10 +3,13 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Ninject;
 using Ninject.Modules;
+using Victoria;
+using Xylox.Audio;
 using Xylox.Discord;
 using Xylox.Discord.Commands;
 using Xylox.Discord.Config;
 using Xylox.Discord.Helpers.Embeds;
+using Xylox.Services;
 
 namespace Xylox.UI
 {
@@ -44,8 +47,13 @@ namespace Xylox.UI
             Bind<Logger>().ToSelf().InSingletonScope();
             Bind<CommandHandler>().ToSelf().InSingletonScope();
             Bind<IXyloxConfig>().To<XyloxConfig>().InSingletonScope();
+
             Bind<DiscordSocketClient>().ToSelf().InSingletonScope().WithConstructorArgument("config", clientConfig);
             Bind<CommandService>().ToSelf().InSingletonScope().WithConstructorArgument("config", commandConfig);
+
+            Bind<LavaNode>().ToSelf().InSingletonScope();
+            Bind<LavaConfig>().ToSelf().InSingletonScope();
+            Bind<IMusicService>().To<MusicService>().InSingletonScope();
         }
     }
 }
