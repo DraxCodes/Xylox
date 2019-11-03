@@ -48,7 +48,7 @@ namespace Xylox.Audio
             var voiceChannel = GetDiscordChannel<IVoiceChannel>(voiceId);
             await _lavaNode.LeaveAsync(voiceChannel);
 
-            return $"Now Left {voiceChannel.Id}";
+            return $"Now Left {voiceChannel.Name}";
         }
 
         public Task <IEnumerable<IXyloxTrack>> GetPlaylistAsync(ulong id)
