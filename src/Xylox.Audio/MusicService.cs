@@ -16,12 +16,16 @@ namespace Xylox.Audio
     {
         private readonly LavaNode _lavaNode;
         private readonly DiscordSocketClient _discordClient;
+        private readonly IXyloxLogger _logger;
 
-        public MusicService(LavaNode lavaNode, DiscordSocketClient discordClient)
+        public MusicService(LavaNode lavaNode, DiscordSocketClient discordClient, IXyloxLogger logger)
         {
             _lavaNode = lavaNode;
             _discordClient = discordClient;
+            _logger = logger;
+
             _lavaNode.OnTrackEnded += TrackEndedAsync;
+            _lavaNode.OnLog += LogAsync;
         }
 
         public async Task InitializeWhenReadyAsync()
@@ -208,6 +212,12 @@ namespace Xylox.Audio
             await trackEndArgs.Player.TextChannel.SendMessageAsync($"Now playing: {track.Title}");
         }
 
+        private async Task LogAsync(LogMessage arg)
+        {
+            var log = ConvertToXyloxLog(arg);
+            await _logger.LogAsync(log);
+        }
+
         private T GetDiscordChannel<T>(ulong id)
         {
             var channel = _discordClient.GetChannel(id);
@@ -242,6 +252,13 @@ namespace Xylox.Audio
                 Duration = track.Duration,
                 Url = track.Url,
                 IsQueued = isQueued
+            };
+
+        private XyloxLog ConvertToXyloxLog(LogMessage discordLog)
+            => new XyloxLog
+            {
+                Source = discordLog.Source,
+                Message = discordLog.Message
             };
     }
 }
