@@ -200,13 +200,36 @@ namespace Xylox.Audio
             }
         }
 
+        public Task<bool> UserIsInSameVoiceChannel(ulong guildId, ulong userVoiceId)
+        {
+            var guild = GetGuild(guildId);
+
+            if (_lavaNode.TryGetPlayer(guild, out var player))
+            {
+                if (player.VoiceChannel.Id == userVoiceId)
+                {
+                    return Task.FromResult(true);
+                }
+                else
+                {
+                    return Task.FromResult(false);
+                }
+            }
+
+            return Task.FromResult(false);
+        }
+
         private async Task TrackEndedAsync(TrackEndedEventArgs trackEndArgs)
         {
             if (!trackEndArgs.Reason.ShouldPlayNext())
                 return;
 
             if (!trackEndArgs.Player.Queue.TryDequeue(out var track))
+            {
                 await trackEndArgs.Player.TextChannel.SendMessageAsync("Playback Finised");
+                return;
+            }
+                
 
             var embed = new EmbedBuilder()
                 .WithColor(Color.Green)

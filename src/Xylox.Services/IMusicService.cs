@@ -17,5 +17,6 @@ namespace Xylox.Services
         Task<string> ResumeAsync(ulong guildId);
         Task<string> StopAsync(ulong guildId);
         Task<string> SetVolumeAsync(int level, ulong guildId);
+        Task<bool> UserIsInSameVoiceChannel(ulong guildId, ulong userVoiceId);
     }
 }
