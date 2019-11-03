@@ -52,19 +52,32 @@ namespace Xylox.Discord.Commands.Modules
         public async Task Play(
             [Remainder][Name("Query")][Summary("")]string query)
         {
+            var voiceChannel = Context.User.VoiceChannel;
+
+            if (!await UserIsInVoiceChannelAsync(voiceChannel)) { return; }
+            if (!await _musicService.UserIsInSameVoiceChannel(Context.Guild.Id, voiceChannel.Id)) { return; }
+
             var trackResult = await _musicService.PlayTrackAsync(query, Context.Guild.Id);
 
             if (trackResult is XyloxTrack track)
             {
                 var embed = new EmbedBuilder()
                     .WithColor(Color.Green)
-                    .WithTitle(_serviceName)
                     .WithDescription(
                     $"Title: {track.Title}\n" +
                     $"Author: {track.Author}\n" +
                     $"Duration: {track.Duration.ToString("h'h 'm'm 's's'")}\n\n" +
                     $"Url: [Youtube]({track.Url})")
                     .WithThumbnailUrl($"https://img.youtube.com/vi/{track.Id}/maxresdefault.jpg");
+
+                if (track.IsQueued)
+                {
+                    embed.Title = $"{_serviceName}, Track Queued";
+                }
+                else
+                {
+                    embed.Title = $"{_serviceName}, Now Playing";
+                }
 
                 await ReplyEmbedAsync(embed);
             }
@@ -75,11 +88,53 @@ namespace Xylox.Discord.Commands.Modules
             }
         }
 
+        [Command("Stop")]
+        public async Task Stop()
+        {
+            var voiceChannel = Context.User.VoiceChannel;
+
+            if (!await UserIsInVoiceChannelAsync(voiceChannel)) { return; }
+            if (!await _musicService.UserIsInSameVoiceChannel(Context.Guild.Id, voiceChannel.Id)) { return; }
+
+            var result = await _musicService.StopAsync(Context.Guild.Id);
+            var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result);
+
+            await ReplyEmbedAsync(embed);
+        }
+
+        [Command("Pause")]
+        public async Task Pause()
+        {
+            var voiceChannel = Context.User.VoiceChannel;
+
+            if (!await UserIsInVoiceChannelAsync(voiceChannel)) { return; }
+            if (!await _musicService.UserIsInSameVoiceChannel(Context.Guild.Id, voiceChannel.Id)) { return; }
+
+            var result = await _musicService.PauseAsync(Context.Guild.Id);
+            var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result);
+
+            await ReplyEmbedAsync(embed);
+        }
+
+        [Command("Resume")]
+        public async Task Resume()
+        {
+            var voiceChannel = Context.User.VoiceChannel;
+
+            if (!await UserIsInVoiceChannelAsync(voiceChannel)) { return; }
+            if (!await _musicService.UserIsInSameVoiceChannel(Context.Guild.Id, voiceChannel.Id)) { return; }
+
+            var result = await _musicService.ResumeAsync(Context.Guild.Id);
+            var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result);
+
+            await ReplyEmbedAsync(embed);
+        }
+
         private async Task<bool> UserIsInVoiceChannelAsync(SocketVoiceChannel channel)
         {
             if (channel is null)
             {
-                var embed = _embedFactory.Generate(EmbedType.Error, _serviceName, "Please join a voice channel before you request the bot join.");
+                var embed = _embedFactory.Generate(EmbedType.Error, _serviceName, "Please join a voice channel before you request music service commands.");
                 await ReplyEmbedAsync(embed);
                 return false;
             }
