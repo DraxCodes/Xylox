@@ -33,10 +33,17 @@ namespace Xylox.Audio
             await _lavaNode.ConnectAsync();
         }
 
-        public async Task<string> JoinAsync(ulong voiceId, ulong textId)
+        public async Task<string> JoinAsync(ulong guildId, ulong voiceId, ulong textId)
         {
             var voiceChannel = GetDiscordChannel<IVoiceChannel>(voiceId);
             var textChannel = GetDiscordChannel<ITextChannel>(textId);
+            var guild = GetGuild(guildId);
+
+            if (_lavaNode.TryGetPlayer(guild, out var player))
+            {
+                return $"I am already joined to {player.VoiceChannel.Name}";
+            }
+
 
             await _lavaNode.JoinAsync(voiceChannel, textChannel);
 
@@ -51,11 +58,11 @@ namespace Xylox.Audio
             return $"Now Left {voiceChannel.Name}";
         }
 
-        public Task <IEnumerable<IXyloxTrack>> GetPlaylistAsync(ulong id)
+        public Task<IEnumerable<IXyloxTrack>> GetPlaylistAsync(ulong id)
         {
             var guild = GetGuild(id);
             var tracks = new List<IXyloxTrack>();
-            
+
 
             if (_lavaNode.TryGetPlayer(guild, out var player))
             {
@@ -229,7 +236,7 @@ namespace Xylox.Audio
                 await trackEndArgs.Player.TextChannel.SendMessageAsync("Playback Finised");
                 return;
             }
-                
+
 
             var embed = new EmbedBuilder()
                 .WithColor(Color.Green)
