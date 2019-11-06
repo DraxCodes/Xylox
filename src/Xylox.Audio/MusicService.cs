@@ -244,7 +244,7 @@ namespace Xylox.Audio
 
             var embed = new EmbedBuilder()
                 .WithColor(Color.Green)
-                .WithTitle("Music Service")
+                .WithTitle("Music Service, Now Playing")
                 .WithDescription(
                     $"Title: {track.Title}\n" +
                     $"Author: {track.Author}\n" +
