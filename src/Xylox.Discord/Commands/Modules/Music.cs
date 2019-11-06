@@ -138,7 +138,7 @@ namespace Xylox.Discord.Commands.Modules
         {
             if (channel is null)
             {
-                var embed = _embedFactory.Generate(EmbedType.Error, _serviceName, "Please join a voice channel before you request music service commands.");
+                var embed = _embedFactory.Generate(EmbedType.Warning, _serviceName, "Please join a voice channel before you request music service commands.");
                 await ReplyEmbedAsync(embed);
                 return false;
             }
