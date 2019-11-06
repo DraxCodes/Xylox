@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Discord;
+using Xylox.Services;
+using Xylox.Services.Entities;
 
-namespace Xylox.Discord
+namespace Xylox.UI
 {
-    public class Logger
+    public class Logger : IXyloxLogger
     {
         private readonly SemaphoreSlim _semaphoreSlim;
 
@@ -14,7 +15,7 @@ namespace Xylox.Discord
             _semaphoreSlim = new SemaphoreSlim(1);
         }
 
-        internal async Task LogAsync(LogMessage arg)
+        public async Task LogAsync(XyloxLog arg)
         {
             await _semaphoreSlim.WaitAsync();
 
