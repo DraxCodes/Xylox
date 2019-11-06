@@ -281,12 +281,7 @@ namespace Xylox.Audio
         }
 
         private bool IsValidVolume(int level)
-        {
-            if (level < 1 || level > 100)
-                return false;
-            else
-                return true;
-        }
+            => level < 1 || level > 100;
 
         private XyloxTrack ConvertTrackToXyloxTrack(LavaTrack track, bool isQueued)
             => new XyloxTrack
