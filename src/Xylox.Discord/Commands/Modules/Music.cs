@@ -131,7 +131,34 @@ namespace Xylox.Discord.Commands.Modules
         [Command("Skip")]
         public async Task Skip()
         {
+            var voiceChannel = Context.User.VoiceChannel;
 
+            if (!await UserIsInVoiceChannelAsync(voiceChannel)) { return; }
+            if (!await _musicService.UserIsInSameVoiceChannel(Context.Guild.Id, voiceChannel.Id)) { return; }
+
+            var result = await _musicService.SkipTrackAsync(Context.Guild.Id);
+
+            if (result is XyloxTrack track)
+            {
+                var embed = new EmbedBuilder()
+                   .WithTitle($"{_serviceName}, Track Skipped")
+                   .WithColor(Color.Green)
+                   .WithDescription(
+                   $"Now Playing\n" +
+                   $"Title: {track.Title}\n" +
+                   $"Author: {track.Author}\n" +
+                   $"Duration: {track.Duration.ToString("h'h 'm'm 's's'")}\n\n" +
+                   $"Url: [Youtube]({track.Url})")
+                   .WithThumbnailUrl($"https://img.youtube.com/vi/{track.Id}/maxresdefault.jpg");
+                await ReplyEmbedAsync(embed);
+                return;
+            }
+            else
+            {
+                var embed = _embedFactory.Generate(EmbedType.Warning, _serviceName, result.Message);
+                await ReplyEmbedAsync(embed);
+                return;
+            }
         }
 
         private async Task<bool> UserIsInVoiceChannelAsync(SocketVoiceChannel channel)
