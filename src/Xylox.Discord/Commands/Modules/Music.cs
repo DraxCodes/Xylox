@@ -48,7 +48,7 @@ namespace Xylox.Discord.Commands.Modules
 
         [Command("Play")]
         public async Task Play(
-            [Remainder][Name("Query")][Summary("")]string query)
+            [Remainder][Name("Query")][Summary("The song title/Author; Example `Back In Black - ACDC`")]string query)
         {
             var voiceChannel = Context.User.VoiceChannel;
 
@@ -126,6 +126,12 @@ namespace Xylox.Discord.Commands.Modules
             var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result);
 
             await ReplyEmbedAsync(embed);
+        }
+
+        [Command("Skip")]
+        public async Task Skip()
+        {
+
         }
 
         private async Task<bool> UserIsInVoiceChannelAsync(SocketVoiceChannel channel)
