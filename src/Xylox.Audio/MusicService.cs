@@ -180,7 +180,6 @@ namespace Xylox.Audio
                 }
                 else
                 {
-                    _lastPlayedTracks.TryAdd(id, player.Track);
                     await player.SkipAsync();
                     var track = ConvertTrackToXyloxTrack(player.Track, false);
                     return track;
@@ -198,7 +197,6 @@ namespace Xylox.Audio
             {
                 if (player.PlayerState is PlayerState.Playing)
                 {
-                    _lastPlayedTracks.TryAdd(id, player.Track);
                     await player.StopAsync();
                     return new XyloxServiceResult { Message = "Player has now stopped playing." };
                 }
@@ -236,8 +234,6 @@ namespace Xylox.Audio
         {
             if (!trackEndArgs.Reason.ShouldPlayNext())
                 return;
-
-            _lastPlayedTracks.TryAdd(trackEndArgs.Player.TextChannel.Guild.Id, trackEndArgs.Track);
 
             if (!trackEndArgs.Player.Queue.TryDequeue(out var track))
             {
