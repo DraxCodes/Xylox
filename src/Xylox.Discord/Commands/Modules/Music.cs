@@ -161,6 +161,20 @@ namespace Xylox.Discord.Commands.Modules
             }
         }
 
+        [Command("Volume")] [Alias("Vol")]
+        public async Task Volume(
+            [Name("Level")][Summary("The level you wish to set the volume to (1-100)")]int level)
+        {
+            var voiceChannel = Context.User.VoiceChannel;
+
+            if (!await UserIsInVoiceChannelAsync(voiceChannel)) { return; }
+            if (!await _musicService.UserIsInSameVoiceChannel(Context.Guild.Id, voiceChannel.Id)) { return; }
+
+            var result = await _musicService.SetVolumeAsync(level, Context.Guild.Id);
+            var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result.Message);
+            await ReplyEmbedAsync(embed);
+        }
+
         private async Task<bool> UserIsInVoiceChannelAsync(SocketVoiceChannel channel)
         {
             if (channel is null)
