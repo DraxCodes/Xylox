@@ -1,6 +1,8 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Xylox.Discord.Helpers.Embeds;
 using Xylox.Services;
@@ -172,6 +174,37 @@ namespace Xylox.Discord.Commands.Modules
 
             var result = await _musicService.SetVolumeAsync(level, Context.Guild.Id);
             var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result.Message);
+            await ReplyEmbedAsync(embed);
+        }
+
+        [Command("Playlist")]
+        public async Task Playlist()
+        {
+            var voiceChannel = Context.User.VoiceChannel;
+
+            if (!await UserIsInVoiceChannelAsync(voiceChannel)) { return; }
+            if (!await _musicService.UserIsInSameVoiceChannel(Context.Guild.Id, voiceChannel.Id)) { return; }
+
+            var results = await _musicService.GetPlaylistAsync(Context.Guild.Id);
+            if (!results.Any())
+            {
+                var warnEmbed = _embedFactory.Generate(EmbedType.Warning, _serviceName, "No songs in queue.");
+                await ReplyEmbedAsync(warnEmbed);
+                return;
+            }
+
+            var sb = new StringBuilder();
+            int pos = 1;
+            foreach (var result in results)
+            {
+                if (result is XyloxTrack track)
+                {
+                    sb.Append($"[{pos}] [{track.Title}]({track.Url})\n");
+                    pos++;
+                }
+            }
+
+            var embed = _embedFactory.Generate(EmbedType.Success, _serviceName, sb.ToString());
             await ReplyEmbedAsync(embed);
         }
 
