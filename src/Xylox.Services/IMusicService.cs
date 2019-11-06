@@ -7,16 +7,16 @@ namespace Xylox.Services
     public interface IMusicService
     {
         Task InitializeWhenReadyAsync();
-        Task<IEnumerable<IXyloxTrack>> GetPlaylistAsync(ulong guildId);
-        Task<IXyloxTrack> PlayTrackAsync(string query, ulong guildId);
-        Task<IXyloxTrack> SkipTrackAsync(int trackId, ulong guildId);
-        Task<IXyloxTrack> SkipTrackAsync(ulong guildId);
-        Task<string> JoinAsync(ulong guildId, ulong voiceId, ulong textId);
-        Task<string> LeaveAsync(ulong voiceId);
-        Task<string> PauseAsync(ulong guildId);
-        Task<string> ResumeAsync(ulong guildId);
-        Task<string> StopAsync(ulong guildId);
-        Task<string> SetVolumeAsync(int level, ulong guildId);
+        Task<IEnumerable<IXyloxServiceResult>> GetPlaylistAsync(ulong guildId);
+        Task<IXyloxServiceResult> PlayTrackAsync(string query, ulong guildId);
+        Task<IXyloxServiceResult> SkipTrackAsync(int trackId, ulong guildId);
+        Task<IXyloxServiceResult> SkipTrackAsync(ulong guildId);
+        Task<IXyloxServiceResult> JoinAsync(ulong guildId, ulong voiceId, ulong textId);
+        Task<IXyloxServiceResult> LeaveAsync(ulong voiceId);
+        Task<IXyloxServiceResult> PauseAsync(ulong guildId);
+        Task<IXyloxServiceResult> ResumeAsync(ulong guildId);
+        Task<IXyloxServiceResult> StopAsync(ulong guildId);
+        Task<IXyloxServiceResult> SetVolumeAsync(int level, ulong guildId);
         Task<bool> UserIsInSameVoiceChannel(ulong guildId, ulong userVoiceId);
     }
 }

@@ -29,7 +29,7 @@ namespace Xylox.Discord.Commands.Modules
             if (!await UserIsInVoiceChannelAsync(voiceChannel)) { return; }
 
             var result = await _musicService.JoinAsync(Context.Guild.Id, voiceChannel.Id, Context.Message.Channel.Id);
-            var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result);
+            var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result.Message);
             await ReplyEmbedAsync(embed);
         }
 
@@ -42,7 +42,7 @@ namespace Xylox.Discord.Commands.Modules
             if (!await _musicService.UserIsInSameVoiceChannel(Context.Guild.Id, voiceChannel.Id)) { return; }
 
             var result = await _musicService.LeaveAsync(voiceChannel.Id);
-            var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result);
+            var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result.Message);
             await ReplyEmbedAsync(embed);
         }
 
@@ -95,7 +95,7 @@ namespace Xylox.Discord.Commands.Modules
             if (!await _musicService.UserIsInSameVoiceChannel(Context.Guild.Id, voiceChannel.Id)) { return; }
 
             var result = await _musicService.StopAsync(Context.Guild.Id);
-            var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result);
+            var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result.Message);
 
             await ReplyEmbedAsync(embed);
         }
@@ -109,7 +109,7 @@ namespace Xylox.Discord.Commands.Modules
             if (!await _musicService.UserIsInSameVoiceChannel(Context.Guild.Id, voiceChannel.Id)) { return; }
 
             var result = await _musicService.PauseAsync(Context.Guild.Id);
-            var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result);
+            var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result.Message);
 
             await ReplyEmbedAsync(embed);
         }
@@ -123,7 +123,7 @@ namespace Xylox.Discord.Commands.Modules
             if (!await _musicService.UserIsInSameVoiceChannel(Context.Guild.Id, voiceChannel.Id)) { return; }
 
             var result = await _musicService.ResumeAsync(Context.Guild.Id);
-            var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result);
+            var embed = _embedFactory.Generate(EmbedType.Info, _serviceName, result.Message);
 
             await ReplyEmbedAsync(embed);
         }

@@ -33,7 +33,7 @@ namespace Xylox.Audio
             await _lavaNode.ConnectAsync();
         }
 
-        public async Task<string> JoinAsync(ulong guildId, ulong voiceId, ulong textId)
+        public async Task<IXyloxServiceResult> JoinAsync(ulong guildId, ulong voiceId, ulong textId)
         {
             var voiceChannel = GetDiscordChannel<IVoiceChannel>(voiceId);
             var textChannel = GetDiscordChannel<ITextChannel>(textId);
@@ -41,27 +41,27 @@ namespace Xylox.Audio
 
             if (_lavaNode.TryGetPlayer(guild, out var player))
             {
-                return $"I am already joined to {player.VoiceChannel.Name}";
+                return new XyloxServiceResult { Message = $"I am already joined to {player.VoiceChannel.Name}" };
             }
 
 
             await _lavaNode.JoinAsync(voiceChannel, textChannel);
 
-            return $"Joined {voiceChannel.Name}, bound to {textChannel.Name}";
+            return new XyloxServiceResult { Message = $"Joined {voiceChannel.Name}, bound to {textChannel.Name}" };
         }
 
-        public async Task<string> LeaveAsync(ulong voiceId)
+        public async Task<IXyloxServiceResult> LeaveAsync(ulong voiceId)
         {
             var voiceChannel = GetDiscordChannel<IVoiceChannel>(voiceId);
             await _lavaNode.LeaveAsync(voiceChannel);
 
-            return $"Now Left {voiceChannel.Name}";
+            return new XyloxServiceResult { Message = $"Now Left {voiceChannel.Name}" };
         }
 
-        public Task<IEnumerable<IXyloxTrack>> GetPlaylistAsync(ulong id)
+        public Task<IEnumerable<IXyloxServiceResult>> GetPlaylistAsync(ulong id)
         {
             var guild = GetGuild(id);
-            var tracks = new List<IXyloxTrack>();
+            var tracks = new List<IXyloxServiceResult>();
 
 
             if (_lavaNode.TryGetPlayer(guild, out var player))
@@ -73,10 +73,10 @@ namespace Xylox.Audio
                 }
             }
 
-            return Task.FromResult((IEnumerable<IXyloxTrack>)tracks);
+            return Task.FromResult((IEnumerable<IXyloxServiceResult>)tracks);
         }
 
-        public async Task<string> PauseAsync(ulong id)
+        public async Task<IXyloxServiceResult> PauseAsync(ulong id)
         {
             var guild = GetGuild(id);
 
@@ -84,19 +84,19 @@ namespace Xylox.Audio
             {
                 if (player.PlayerState is PlayerState.Paused)
                 {
-                    return "Unable to pause, player is already paused. Did you mean to resume?";
+                    return new XyloxServiceResult { Message = "Unable to pause, player is already paused. Did you mean to resume?" };
                 }
                 else
                 {
                     await player.PauseAsync();
-                    return "Player now paused";
+                    return new XyloxServiceResult { Message = "Player now paused" };
                 }
             }
 
-            return "Error when trying to pause, please contact my creator.";
+            return new XyloxServiceResult { Message = "Error when trying to pause, please contact my creator." };
         }
 
-        public async Task<IXyloxTrack> PlayTrackAsync(string query, ulong id)
+        public async Task<IXyloxServiceResult> PlayTrackAsync(string query, ulong id)
         {
             var search = await _lavaNode.SearchYouTubeAsync(query);
             var track = search.Tracks.FirstOrDefault();
@@ -116,10 +116,13 @@ namespace Xylox.Audio
                 }
             }
 
-            return new BlankXyloxTrack();
+            return new XyloxServiceResult
+            {
+                Message = $"Player not available for {guild.Name}, use the join command first."
+            };
         }
 
-        public async Task<string> ResumeAsync(ulong id)
+        public async Task<IXyloxServiceResult> ResumeAsync(ulong id)
         {
             var guild = GetGuild(id);
 
@@ -128,18 +131,18 @@ namespace Xylox.Audio
                 if (player.PlayerState is PlayerState.Paused)
                 {
                     await player.ResumeAsync();
-                    return "Player has now resumed.";
+                    return new XyloxServiceResult { Message = "Player has now resumed." };
                 }
                 else
                 {
-                    return "Unable to resume, player is already playing. Did you mean to pause?";
-                }
+                    return new XyloxServiceResult { Message = "Unable to resume, player is already playing. Did you mean to pause?" };
             }
-
-            return "Error when trying to resume, please contact my creator.";
         }
 
-        public async Task<string> SetVolumeAsync(int level, ulong id)
+            return new XyloxServiceResult { Message = "Error when trying to resume, please contact my creator." };
+        }
+
+        public async Task<IXyloxServiceResult> SetVolumeAsync(int level, ulong id)
         {
             var guild = GetGuild(id);
 
@@ -148,23 +151,23 @@ namespace Xylox.Audio
                 if (IsValidVolume(level))
                 {
                     await player.UpdateVolumeAsync((ushort)level);
-                    return $"Player volume set to {level}%";
+                    return new XyloxServiceResult { Message = $"Player volume set to {level}%" };
                 }
                 else
                 {
-                    return $"Something went wrong. Please ensure level is between 1 - 100.";
+                    return new XyloxServiceResult { Message = $"Something went wrong. Please ensure level is between 1 - 100." };
                 }
             }
 
-            return "Error trying to set volume, please contact my creator.";
+            return new XyloxServiceResult { Message = "Error trying to set volume, please contact my creator." };
         }
 
-        public Task<IXyloxTrack> SkipTrackAsync(int trackId, ulong id)
+        public Task<IXyloxServiceResult> SkipTrackAsync(int trackId, ulong id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IXyloxTrack> SkipTrackAsync(ulong id)
+        public async Task<IXyloxServiceResult> SkipTrackAsync(ulong id)
         {
             var guild = GetGuild(id);
 
@@ -172,7 +175,7 @@ namespace Xylox.Audio
             {
                 if (player.Queue.Count < 1)
                 {
-                    return new BlankXyloxTrack();
+                    return new XyloxServiceResult { Message = "Unable to skip, nothing in queue." };
                 }
                 else
                 {
@@ -182,10 +185,10 @@ namespace Xylox.Audio
                 }
             }
 
-            return new BlankXyloxTrack();
+            return new XyloxServiceResult { Message = "Error in MusicService SkipAsync. Contact my creator." };
         }
 
-        public async Task<string> StopAsync(ulong id)
+        public async Task<IXyloxServiceResult> StopAsync(ulong id)
         {
             var guild = GetGuild(id);
 
@@ -194,16 +197,16 @@ namespace Xylox.Audio
                 if (player.PlayerState is PlayerState.Playing)
                 {
                     await player.StopAsync();
-                    return "Player has now stopped playing.";
+                    return new XyloxServiceResult { Message = "Player has now stopped playing." };
                 }
                 else
                 {
-                    return "Player didn't seem to be playing anything.";
+                    return new XyloxServiceResult { Message = "Player didn't seem to be playing anything." };
                 }
             }
             else
             {
-                return "Error stopping player, please contact my creator.";
+                return new XyloxServiceResult { Message = "Error stopping player, please contact my creator." };
             }
         }
 
