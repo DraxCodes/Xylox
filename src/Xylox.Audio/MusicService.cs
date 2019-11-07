@@ -217,14 +217,7 @@ namespace Xylox.Audio
 
             if (_lavaNode.TryGetPlayer(guild, out var player))
             {
-                if (player.VoiceChannel.Id == userVoiceId)
-                {
-                    return Task.FromResult(true);
-                }
-                else
-                {
-                    return Task.FromResult(false);
-                }
+                return Task.FromResult(player.VoiceChannel.Id == userVoiceId);
             }
 
             return Task.FromResult(false);
