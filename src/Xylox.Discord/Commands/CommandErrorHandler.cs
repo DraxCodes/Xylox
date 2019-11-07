@@ -133,20 +133,5 @@ namespace Xylox.Discord.Commands
 
             return sb.ToString();
         }
-
-        private async Task<string> GeneratePreconditionList(ICommandContext context, CommandInfo commandInfo)
-        {
-            var preconditions = commandInfo.Preconditions;
-            var sb = new StringBuilder();
-
-            var test = await commandInfo.CheckPreconditionsAsync(context);
-
-            foreach (var precondtion in preconditions)
-            {
-                sb.Append($"{precondtion.Group}\n");
-            }
-
-            return sb.ToString();
-        }
     }
 }
