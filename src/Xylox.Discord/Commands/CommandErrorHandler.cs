@@ -27,6 +27,8 @@ namespace Xylox.Discord.Commands
                 title: "⚠ Bad Arg Count", 
                 description: usage);
 
+            embed.Footer = new EmbedFooterBuilder { Text = "Required: <>, Optional: []" };
+
             return embed.Build();
         }
 
@@ -96,7 +98,6 @@ namespace Xylox.Discord.Commands
             {
                 var sb = new StringBuilder()
                     .Append($"**Command Information**\n" +
-                    $"Required: **<param name>**, Optional: [param name]\n" +
                     $"Usage: xy.{commandInfo.Name} ");
 
                 var parameterSummaries = GenerateParameterSummaries(commandInfo.Parameters);
