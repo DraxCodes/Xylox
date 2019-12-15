@@ -15,10 +15,21 @@ namespace Xylox.Discord.Commands.Modules
         [RequireUserPermission(GuildPermission.KickMembers)]
         public async Task KickCommand(
             [Name("User")] [Summary("The user you wish to kick.")] SocketGuildUser user,
-            [Name("User")] [Summary("The reason you are kicking the user.")]string reason)
+            [Name("Reason")] [Summary("The reason you are kicking the user.")]string reason)
         {
             await user.KickAsync(reason);
-            await ReplyAsync($"{user.Mention} has been kicked for: {reason}.");
+            await ReplyAsync($"{user.Mention} has been kicked for: {reason}.\n" +
+                $"User kicked by {Context.User.Mention}.");
+        }
+
+        [Command("Ban")]
+        public async Task BanCommand(
+            [Name("User")] [Summary("The user you wish to ban.")] SocketGuildUser user,
+            [Name("Reason")] [Summary("The reason you are banning the user.")]string reason)
+        {
+            await user.BanAsync(reason: reason);
+            await ReplyAsync($"{user.Mention} has been banned for: {reason}.\n" +
+                $"User Banned by {Context.User.Mention}.");
         }
     }
 }
