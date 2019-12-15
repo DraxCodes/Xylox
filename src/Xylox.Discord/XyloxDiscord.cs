@@ -57,8 +57,12 @@ namespace Xylox.Discord
         {
             await _discordClient.SetStatusAsync(UserStatus.Idle);
             await _discordClient.SetGameAsync(name: _xyConf.Status, type: ActivityType.Listening);
-            await _musicService.InitializeWhenReadyAsync();
+
+            await InitializeAudio();
         }
+
+        private Task InitializeAudio()
+            => _xyConf.AudioIsEnabled ? _musicService.InitializeWhenReadyAsync() : Task.CompletedTask;
 
         private XyloxLog ConvertToXyloxLog(LogMessage discordLog)
             => new XyloxLog
