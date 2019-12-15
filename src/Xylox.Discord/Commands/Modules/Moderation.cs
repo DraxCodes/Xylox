@@ -23,6 +23,8 @@ namespace Xylox.Discord.Commands.Modules
         }
 
         [Command("Ban")]
+        [RequireBotPermission(GuildPermission.BanMembers)]
+        [RequireUserPermission(GuildPermission.BanMembers)]
         public async Task BanCommand(
             [Name("User")] [Summary("The user you wish to ban.")] SocketGuildUser user,
             [Name("Reason")] [Summary("The reason you are banning the user.")]string reason)
