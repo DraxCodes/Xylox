@@ -10,8 +10,5 @@ namespace Xylox.Discord.Commands
     {
         protected Task ReplyEmbedAsync(EmbedBuilder embed)
             => Context.Channel.SendMessageAsync(embed: embed.Build());
-
-        protected Task BulkDeleteAsync(IEnumerable<IMessage> messages)
-            => Context.Channel.DeleteMessagesAsync(messages);
     }
 }

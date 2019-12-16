@@ -29,7 +29,7 @@ namespace Xylox.Discord.Commands.Modules
             [Name("User")] [Summary("The user you wish to ban.")] SocketGuildUser user,
             [Name("Reason")] [Summary("The reason you are banning the user.")]string reason)
         {
-            await user.BanAsync(pruneDays: 7 ,reason: reason);
+            await user.BanAsync(pruneDays: 7, reason: reason);
             await ReplyAsync($"{user.Mention} has been banned for: {reason}.\n" +
                 $"User Banned by {Context.User.Mention}.");
         }
@@ -45,28 +45,51 @@ namespace Xylox.Discord.Commands.Modules
             await Context.Guild.RemoveBanAsync(user);
         }
 
-        [Command("Purge")]
+        [Command("Purge", RunMode = RunMode.Async)]
         [RequireBotPermission(GuildPermission.ManageMessages)]
         [RequireUserPermission(GuildPermission.ManageMessages)]
         public async Task Purge(
-            [Name("User")] [Summary("The user you wish to purge.")] SocketGuildUser user,
             [Name("Amount")] [Summary("The amount of messages you wish to purge. (Default 20)")] int amount = 20)
         {
-            if (Context.Channel is SocketTextChannel textChannel)
-            {
-                var messages = await FetchAndVerfiyMessages(textChannel, amount);
-            }
-            else
-            {
-                
-            }
+            var textChannel = Context.Channel as SocketTextChannel;
+            var messages = await FetchAndVerfiyMessages(textChannel, amount);
+            await textChannel.DeleteMessagesAsync(messages);
+
+            var reply = await ReplyAsync($"{amount} messages deleted.");
+            await Task.Delay(TimeSpan.FromSeconds(3));
+            await reply.DeleteAsync();
         }
 
+        [Command("PurgeUser")]
+        [RequireBotPermission(GuildPermission.ManageMessages)]
+        [RequireUserPermission(GuildPermission.ManageMessages)]
+        public async Task PurgeUserCommand(
+            [Name("User")] [Summary("The user you wish to purge messages for.")] SocketGuildUser user,
+            [Name("Amount")] [Summary("The amount of messages to purge.")] int amount)
+        {
+            var textChannel = Context.Channel as SocketTextChannel;
+            var userMessages = await FecthAndVerifyMessages(textChannel, amount, user);
+            await textChannel.DeleteMessagesAsync(userMessages);
+
+            var reply = await ReplyAsync($"{amount} messages purged for {user.Mention}.");
+            await Task.Delay(TimeSpan.FromSeconds(3));
+            await reply.DeleteAsync();
+        }
+            
         private async Task<IEnumerable<IMessage>> FetchAndVerfiyMessages(SocketTextChannel channel, int amount)
         {
             var oldestAllowedTimestamp = DateTime.Now.AddDays(-14);
             var channelMessages = await channel.GetMessagesAsync(amount).FlattenAsync();
             return channelMessages.Where(m => m.CreatedAt > oldestAllowedTimestamp);
+        }
+
+        private async Task<IEnumerable<IMessage>> FecthAndVerifyMessages(SocketTextChannel channel, int amount, SocketGuildUser user)
+        {
+            var channelMessages = await FetchAndVerfiyMessages(channel, 100);
+            var userMessages = channelMessages.Where(m => m.Author.Id == user.Id);
+            var orderedMessages = userMessages.OrderBy(m => m.CreatedAt);
+
+            return orderedMessages.Take(amount);
         }
     }
 }
