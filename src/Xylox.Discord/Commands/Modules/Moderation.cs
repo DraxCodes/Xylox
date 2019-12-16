@@ -52,7 +52,7 @@ namespace Xylox.Discord.Commands.Modules
             [Name("Amount")] [Summary("The amount of messages you wish to purge. (Default 20)")] int amount = 20)
         {
             var textChannel = Context.Channel as SocketTextChannel;
-            var messages = await FetchAndVerfiyMessages(textChannel, amount);
+            var messages = await FecthAndVerifyMessages(textChannel, amount);
             await textChannel.DeleteMessagesAsync(messages);
 
             var reply = await ReplyAsync($"{amount} messages deleted.");
@@ -68,25 +68,39 @@ namespace Xylox.Discord.Commands.Modules
             [Name("Amount")] [Summary("The amount of messages to purge.")] int amount)
         {
             var textChannel = Context.Channel as SocketTextChannel;
-            var userMessages = await FecthAndVerifyMessages(textChannel, amount, user);
+            var userMessages = await FecthAndVerifyMessages(textChannel, amount, user.Id);
             await textChannel.DeleteMessagesAsync(userMessages);
 
             var reply = await ReplyAsync($"{amount} messages purged for {user.Mention}.");
             await Task.Delay(TimeSpan.FromSeconds(3));
             await reply.DeleteAsync();
         }
-            
-        private async Task<IEnumerable<IMessage>> FetchAndVerfiyMessages(SocketTextChannel channel, int amount)
+
+        [Command("PurgeBot")]
+        [RequireBotPermission(GuildPermission.ManageMessages)]
+        [RequireUserPermission(GuildPermission.ManageMessages)]
+        public async Task PurgeBotCommand()
+        {
+            var textChannel = Context.Channel as SocketTextChannel;
+            var botMessages = await FecthAndVerifyMessages(textChannel, 100, Context.Client.CurrentUser.Id);
+            await textChannel.DeleteMessagesAsync(botMessages);
+
+            var reply = await ReplyAsync("Xylox Messages Purged");
+            await Task.Delay(TimeSpan.FromSeconds(3));
+            await reply.DeleteAsync();
+        }
+
+        private async Task<IEnumerable<IMessage>> FecthAndVerifyMessages(SocketTextChannel channel, int amount)
         {
             var oldestAllowedTimestamp = DateTime.Now.AddDays(-14);
             var channelMessages = await channel.GetMessagesAsync(amount).FlattenAsync();
             return channelMessages.Where(m => m.CreatedAt > oldestAllowedTimestamp);
         }
 
-        private async Task<IEnumerable<IMessage>> FecthAndVerifyMessages(SocketTextChannel channel, int amount, SocketGuildUser user)
+        private async Task<IEnumerable<IMessage>> FecthAndVerifyMessages(SocketTextChannel channel, int amount, ulong userId)
         {
-            var channelMessages = await FetchAndVerfiyMessages(channel, 100);
-            var userMessages = channelMessages.Where(m => m.Author.Id == user.Id);
+            var channelMessages = await FecthAndVerifyMessages(channel, 100);
+            var userMessages = channelMessages.Where(m => m.Author.Id == userId);
             var orderedMessages = userMessages.OrderBy(m => m.CreatedAt);
 
             return orderedMessages.Take(amount);
