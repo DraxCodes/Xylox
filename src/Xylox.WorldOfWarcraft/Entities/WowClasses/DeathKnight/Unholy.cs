@@ -6,7 +6,9 @@ namespace Xylox.WorldOfWarcraft.Entities.WowClasses.DeathKnight
     {
         public Unholy()
         {
-            Description = "";
+            Description = "The Unholy specialisation currently provides moderate single target damage," +
+                " as well as excellent cleave damage against 4+ targets." +
+                " It is better in this regard when compared to many other specialisations.";
 
             Guides = new Guides
             {
