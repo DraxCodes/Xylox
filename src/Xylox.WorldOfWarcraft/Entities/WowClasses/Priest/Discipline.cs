@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Priest
 {
-    public class Discipline : Class
+    public class Discipline : Spec
     {
     }
 }

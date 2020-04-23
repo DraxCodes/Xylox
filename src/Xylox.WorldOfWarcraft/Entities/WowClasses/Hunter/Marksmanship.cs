@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Hunter
 {
-    public class Marksmanship : Class
+    public class Marksmanship : Spec
     {
     }
 }

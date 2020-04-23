@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Warrior
 {
-    public class Protection : Class
+    public class Protection : Spec
     {
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Rogue
 {
-    public class Outlaw : Class
+    public class Outlaw : Spec
     {
     }
 }

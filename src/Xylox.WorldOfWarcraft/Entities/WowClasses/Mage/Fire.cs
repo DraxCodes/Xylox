@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Mage
 {
-    public class Fire : Class
+    public class Fire : Spec
     {
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Rogue
 {
-    public class Subtlety : Class
+    public class Subtlety : Spec
     {
     }
 }

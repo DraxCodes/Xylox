@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Hunter
 {
-    public class BeastMastery : Class
+    public class BeastMastery : Spec
     {
     }
 }

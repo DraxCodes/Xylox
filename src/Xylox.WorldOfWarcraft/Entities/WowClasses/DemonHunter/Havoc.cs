@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.DemonHunter
 {
-    public class Havoc : Class
+    public class Havoc : Spec
     {
     }
 }

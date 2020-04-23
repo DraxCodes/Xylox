@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Paladin
 {
-    public class Protection : Class
+    public class Protection : Spec
     {
     }
 }

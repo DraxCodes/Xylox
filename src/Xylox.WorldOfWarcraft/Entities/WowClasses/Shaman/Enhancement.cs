@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Shaman
 {
-    public class Enhancement : Class
+    public class Enhancement : Spec
     {
     }
 }

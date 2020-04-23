@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.DeathKnight
 {
-    public class Unholy : Class
+    public class Unholy : Spec
     {
     }
 }

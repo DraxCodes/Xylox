@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Shaman
 {
-    public class Restoration : Class
+    public class Restoration : Spec
     {
     }
 }

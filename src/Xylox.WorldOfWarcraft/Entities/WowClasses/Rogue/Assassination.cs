@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Rogue
 {
-    public class Assassination : Class
+    public class Assassination : Spec
     {
     }
 }

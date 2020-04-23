@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Monk
 {
-    public class Mistweaver : Class
+    public class Mistweaver : Spec
     {
     }
 }

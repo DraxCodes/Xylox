@@ -1,6 +1,6 @@
 ﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Warlock
 {
-    public class Demonology : Class
+    public class Demonology : Spec
     {
     }
 }
