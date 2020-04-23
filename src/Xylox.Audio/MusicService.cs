@@ -240,7 +240,7 @@ namespace Xylox.Audio
                 .WithDescription(
                     $"Title: {track.Title}\n" +
                     $"Author: {track.Author}\n" +
-                    $"Duration: {track.Duration.ToString("h'h 'm'm 's's'")}\n\n" +
+                    $"Duration: {track.Duration:h'h 'm'm 's's'}\n\n" +
                     $"Url: [Youtube]({track.Url})")
                 .WithThumbnailUrl($"https://img.youtube.com/vi/{track.Id}/maxresdefault.jpg");
 
