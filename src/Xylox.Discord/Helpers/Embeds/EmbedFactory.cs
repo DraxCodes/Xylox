@@ -25,6 +25,4 @@ namespace Xylox.Discord.Helpers.Embeds
             return embedResult;
         }
     }
-
-
 }
