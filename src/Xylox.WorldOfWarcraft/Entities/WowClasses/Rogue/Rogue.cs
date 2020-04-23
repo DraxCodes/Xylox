@@ -2,8 +2,8 @@
 {
     public class Rogue : Class
     {
-        public Assassination Assassination { get; set; }
-        public Subtlety Subtlety { get; set; }
-        public Outlaw Outlaw { get; set; }
+        public Assassination Assassination { get; set; } = new Assassination();
+        public Subtlety Subtlety { get; set; } = new Subtlety();
+        public Outlaw Outlaw { get; set; } = new Outlaw();
     }
 }

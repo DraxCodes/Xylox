@@ -1,9 +1,11 @@
-﻿namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Warlock
+﻿using System.Security.Cryptography;
+
+namespace Xylox.WorldOfWarcraft.Entities.WowClasses.Warlock
 {
     public class Warlock : Class
     {
-        public Affliction Affliction { get; set; }
-        public Demonology Demonology { get; set; }
-        public Destruction Destruction { get; set; }
+        public Affliction Affliction { get; set; } = new Affliction();
+        public Demonology Demonology { get; set; } = new Demonology();
+        public Destruction Destruction { get; set; } = new Destruction();
     }
 }

@@ -2,8 +2,8 @@
 {
     public class Monk : Class
     {
-        public Brewmaster Brewmaster { get; set; }
-        public Mistweaver Mistweaver { get; set; }
-        public Windwalker Windwalker { get; set; }
+        public Brewmaster Brewmaster { get; set; } = new Brewmaster();
+        public Mistweaver Mistweaver { get; set; } = new Mistweaver();
+        public Windwalker Windwalker { get; set; } = new Windwalker();
     }
 }

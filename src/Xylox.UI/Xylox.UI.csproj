@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Xylox.Audio\Xylox.Audio.csproj" />
     <ProjectReference Include="..\Xylox.Discord\Xylox.Discord.csproj" />
+    <ProjectReference Include="..\Xylox.WorldOfWarcraft\Xylox.WorldOfWarcraft.csproj" />
   </ItemGroup>
 
   <ItemGroup>

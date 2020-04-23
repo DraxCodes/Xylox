@@ -2,8 +2,8 @@
 {
     public class DeathKnight : Class
     {
-        public Blood Blood { get; set; }
-        public Frost Frost { get; set; }
-        public Unholy Unholy { get; set; }
+        public Blood Blood { get; set; } = new Blood();
+        public Frost Frost { get; set; } = new Frost();
+        public Unholy Unholy { get; set; } = new Unholy();
     }
 }

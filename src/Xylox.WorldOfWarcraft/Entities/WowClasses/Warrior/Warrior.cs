@@ -2,8 +2,8 @@
 {
     public class Warrior : Class
     {
-        public Arms Arms { get; set; }
-        public Fury Fury { get; set; }
-        public Protection Protection { get; set; }
+        public Arms Arms { get; set; } = new Arms();
+        public Fury Fury { get; set; } = new Fury();
+        public Protection Protection { get; set; } = new Protection();
     }
 }

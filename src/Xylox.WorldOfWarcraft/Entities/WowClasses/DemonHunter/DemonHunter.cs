@@ -2,7 +2,7 @@
 {
     public class DemonHunter : Class
     {
-        public Vengeance Vengeance { get; set; }
-        public Havoc Havoc { get; set; }
+        public Vengeance Vengeance { get; set; } = new Vengeance();
+        public Havoc Havoc { get; set; } = new Havoc();
     }
 }

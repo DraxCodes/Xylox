@@ -2,8 +2,8 @@
 {
     public class Shaman : Class
     {
-        public Elemental Elemental { get; set; }
-        public Enhancement Enhancement { get; set; }
-        public Restoration Restoration { get; set; }
+        public Elemental Elemental { get; set; } = new Elemental();
+        public Enhancement Enhancement { get; set; } = new Enhancement();
+        public Restoration Restoration { get; set; } = new Restoration();
     }
 }

@@ -2,8 +2,8 @@
 {
     public class Hunter : Class
     {
-        public BeastMastery BeastMastery { get; set; }
-        public Survival Survival { get; set; }
-        public Marksmanship Marksmanship { get; set; }
+        public BeastMastery BeastMastery { get; set; } = new BeastMastery();
+        public Survival Survival { get; set; } = new Survival();
+        public Marksmanship Marksmanship { get; set; } = new Marksmanship();
     }
 }
